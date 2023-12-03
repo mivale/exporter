@@ -9,6 +9,8 @@ help: ## Show this help message
 	egrep -h '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 up: ## Start the project
+	sed "s/###hostname###/$(shell hostname)/" \
+		conf/telegraf.tmpl.conf > conf/telegraf.conf
 	docker compose up -d
 
 down: ## Stop the project
